@@ -8,6 +8,7 @@ import (
     "gopkg.in/yaml.v2"
 )
 
+
 type Config struct{
     Firewall_network_rules map[string]Options
 }
@@ -19,10 +20,12 @@ type Options struct{
 
 func main(){
     fmt.Println("this will parse yaml soon")
-    filename, _ := filepath.Abs("./fruits.yml")
+  
+    filename, _ := filepath.Abs("./metadata/test1.yml")
+     
     yamlFile, err := ioutil.ReadFile(filename)
     fmt.Println(yamlFile)
-    fmt.Println(err)
+    // fmt.Println(err)
 
     if err != nil {
         panic(err)
@@ -36,5 +39,4 @@ func main(){
 
     fmt.Printf("Value: %#v\n", config.Firewall_network_rules)
 
-    keys := make([]string, 0, )
 }
