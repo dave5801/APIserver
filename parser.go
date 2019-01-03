@@ -12,7 +12,12 @@ import (
 type Config struct{
     Title string
     Version string
-    Bar []string
+    Maintainers []map[string]string 
+}
+
+type NameAndEmail struct{
+    Name string
+    Email string
 }
 
 /*
@@ -28,7 +33,6 @@ func main(){
      
     yamlFile, err := ioutil.ReadFile(filename)
     fmt.Println(yamlFile)
-    // fmt.Println(err)
 
     if err != nil {
         panic(err)
@@ -42,6 +46,6 @@ func main(){
 
     fmt.Printf("Title: %#v\n", config.Title)
     fmt.Printf("Version: %#v\n", config.Version)
-    fmt.Printf("Value: %#v\n", config.Bar[0])
+    fmt.Printf("Value: %#v\n", config.Maintainers)
 
 }
