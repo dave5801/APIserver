@@ -9,7 +9,8 @@ import (
 )
 
 
-type Config struct{
+//structure for yml file
+type MetaDataConfig struct{
     Title string
     Version string
     Maintainers []map[string]string
@@ -20,31 +21,50 @@ type Config struct{
     Description string
 }
 
-func main(){
-  
-    filename, _ := filepath.Abs("./metadata/test1.yml")
-     
+func metaDataFileParser(filename string) MetaDataConfig{
+
     yamlFile, err := ioutil.ReadFile(filename)
 
     if err != nil {
         panic(err)
     }
 
-    var config Config
-    err = yaml.Unmarshal(yamlFile, &config)
+    var metaDataConfig MetaDataConfig
+    
+    err = yaml.Unmarshal(yamlFile, &metaDataConfig)
+    
     if err != nil {
         panic(err)
     }
-
-    fmt.Printf("Title: %#v\n", config.Title)
-    fmt.Printf("Version: %#v\n", config.Version)
+    return metaDataConfig
+    //probably delete this section
+    /*
+    fmt.Printf("Title: %#v\n", metaDataConfig.Title)
+    fmt.Printf("Version: %#v\n", metaDataConfig.Version)
     fmt.Printf("Maintainers:\n")
-    fmt.Printf("    Email: %#v\n", config.Maintainers[0]["email"])
-    fmt.Printf("    Name:  %#v\n", config.Maintainers[0]["name"])
-    fmt.Printf("Company: %#v\n", config.Company)
-    fmt.Printf("Website: %#v\n", config.Website)
-    fmt.Printf("Source: %#v\n", config.Source)
-    fmt.Printf("License: %#v\n", config.License)
-    fmt.Printf("Description: %#v\n", config.Description)
+    fmt.Printf("    Email: %#v\n", metaDataConfig.Maintainers[0]["email"])
+    fmt.Printf("    Name:  %#v\n", metaDataConfig.Maintainers[0]["name"])
+    fmt.Printf("Company: %#v\n", metaDataConfig.Company)
+    fmt.Printf("Website: %#v\n", metaDataConfig.Website)
+    fmt.Printf("Source: %#v\n", metaDataConfig.Source)
+    fmt.Printf("License: %#v\n", metaDataConfig.License)
+    fmt.Printf("Description: %#v\n", metaDataConfig.Description)*/
+}
 
+func main(){
+  
+    filename, _ := filepath.Abs("./metadata/test1.yml")
+    metaDataConfig := metaDataFileParser(filename)
+
+    fmt.Printf("Title: %#v\n", metaDataConfig.Title)
+    fmt.Printf("Version: %#v\n", metaDataConfig.Version)
+    fmt.Printf("Maintainers:\n")
+    fmt.Printf("    Email: %#v\n", metaDataConfig.Maintainers[0]["email"])
+    fmt.Printf("    Name:  %#v\n", metaDataConfig.Maintainers[0]["name"])
+    fmt.Printf("Company: %#v\n", metaDataConfig.Company)
+    fmt.Printf("Website: %#v\n", metaDataConfig.Website)
+    fmt.Printf("Source: %#v\n", metaDataConfig.Source)
+    fmt.Printf("License: %#v\n", metaDataConfig.License)
+    fmt.Printf("Description: %#v\n", metaDataConfig.Description)
+    
 }
