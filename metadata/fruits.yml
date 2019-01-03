@@ -1,0 +1,4 @@
+firewall_network_rules:
+  rule1:
+    src:       blablabla-host
+    dst:       blabla-hostname
