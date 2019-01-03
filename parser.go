@@ -8,7 +8,6 @@ import (
     "gopkg.in/yaml.v2"
 )
 
-
 //structure for yml file
 type MetaDataConfig struct{
     Title string
@@ -21,7 +20,7 @@ type MetaDataConfig struct{
     Description string
 }
 
-func metaDataFileParser(filename string) MetaDataConfig{
+func parseMetaDataFromYML(filename string) MetaDataConfig{
 
     yamlFile, err := ioutil.ReadFile(filename)
 
@@ -36,25 +35,14 @@ func metaDataFileParser(filename string) MetaDataConfig{
     if err != nil {
         panic(err)
     }
+    
     return metaDataConfig
-    //probably delete this section
-    /*
-    fmt.Printf("Title: %#v\n", metaDataConfig.Title)
-    fmt.Printf("Version: %#v\n", metaDataConfig.Version)
-    fmt.Printf("Maintainers:\n")
-    fmt.Printf("    Email: %#v\n", metaDataConfig.Maintainers[0]["email"])
-    fmt.Printf("    Name:  %#v\n", metaDataConfig.Maintainers[0]["name"])
-    fmt.Printf("Company: %#v\n", metaDataConfig.Company)
-    fmt.Printf("Website: %#v\n", metaDataConfig.Website)
-    fmt.Printf("Source: %#v\n", metaDataConfig.Source)
-    fmt.Printf("License: %#v\n", metaDataConfig.License)
-    fmt.Printf("Description: %#v\n", metaDataConfig.Description)*/
 }
 
 func main(){
   
     filename, _ := filepath.Abs("./metadata/test1.yml")
-    metaDataConfig := metaDataFileParser(filename)
+    metaDataConfig := parseMetaDataFromYML(filename)
 
     fmt.Printf("Title: %#v\n", metaDataConfig.Title)
     fmt.Printf("Version: %#v\n", metaDataConfig.Version)
