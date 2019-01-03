@@ -1,4 +1,5 @@
-firewall_network_rules:
-  rule1:
-    src:       blablabla-host
-    dst:       blabla-hostname
+title: App w/ Invalid maintainer email
+version: 1.0.1
+bar:
+  - one
+  - two

@@ -10,13 +10,16 @@ import (
 
 
 type Config struct{
-    Firewall_network_rules map[string]Options
+    Title string
+    Version string
+    Bar []string
 }
 
+/*
 type Options struct{
     Src string
     Dst string
-}
+}*/
 
 func main(){
     fmt.Println("this will parse yaml soon")
@@ -37,6 +40,8 @@ func main(){
         panic(err)
     }
 
-    fmt.Printf("Value: %#v\n", config.Firewall_network_rules)
+    fmt.Printf("Title: %#v\n", config.Title)
+    fmt.Printf("Version: %#v\n", config.Version)
+    fmt.Printf("Value: %#v\n", config.Bar[0])
 
 }
