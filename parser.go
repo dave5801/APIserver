@@ -21,12 +21,10 @@ type Config struct{
 }
 
 func main(){
-    fmt.Println("Parse YML files")
   
     filename, _ := filepath.Abs("./metadata/test1.yml")
      
     yamlFile, err := ioutil.ReadFile(filename)
-    fmt.Println(yamlFile)
 
     if err != nil {
         panic(err)
@@ -40,7 +38,9 @@ func main(){
 
     fmt.Printf("Title: %#v\n", config.Title)
     fmt.Printf("Version: %#v\n", config.Version)
-    fmt.Printf("Maintainers: %#v\n", config.Maintainers[0])
+    fmt.Printf("Maintainers:\n")
+    fmt.Printf("    Email: %#v\n", config.Maintainers[0]["email"])
+    fmt.Printf("    Name:  %#v\n", config.Maintainers[0]["name"])
     fmt.Printf("Company: %#v\n", config.Company)
     fmt.Printf("Website: %#v\n", config.Website)
     fmt.Printf("Source: %#v\n", config.Source)
