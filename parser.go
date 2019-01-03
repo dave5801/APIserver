@@ -12,22 +12,16 @@ import (
 type Config struct{
     Title string
     Version string
-    Maintainers []map[string]string 
+    Maintainers []map[string]string
+    Company string
+    Website string
+    Source string
+    License string
+    Description string
 }
-
-type NameAndEmail struct{
-    Name string
-    Email string
-}
-
-/*
-type Options struct{
-    Src string
-    Dst string
-}*/
 
 func main(){
-    fmt.Println("this will parse yaml soon")
+    fmt.Println("Parse YML files")
   
     filename, _ := filepath.Abs("./metadata/test1.yml")
      
@@ -46,6 +40,11 @@ func main(){
 
     fmt.Printf("Title: %#v\n", config.Title)
     fmt.Printf("Version: %#v\n", config.Version)
-    fmt.Printf("Value: %#v\n", config.Maintainers)
+    fmt.Printf("Maintainers: %#v\n", config.Maintainers[0])
+    fmt.Printf("Company: %#v\n", config.Company)
+    fmt.Printf("Website: %#v\n", config.Website)
+    fmt.Printf("Source: %#v\n", config.Source)
+    fmt.Printf("License: %#v\n", config.License)
+    fmt.Printf("Description: %#v\n", config.Description)
 
 }
