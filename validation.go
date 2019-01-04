@@ -6,23 +6,21 @@ import (
 )
  /*
     Need
-        emails
+        X - emails
         urls
         missing fields
  */
 
+func validEmail(email string) bool{
+    re := regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
+    return re.MatchString(email)
+}
 
 func main() {
     
-    str1 := "apptwohotmail.com"
-    str2 := "email@gmail.com"
-   
+    email := "apptwohotmail.com"
 
- 
-    re := regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
- 
-    fmt.Printf("Pattern: %v\n", re.String()) // print pattern   
-    fmt.Printf("\nEmail: %v :%v\n", str1, re.MatchString(str1))
-    fmt.Printf("Email: %v :%v\n", str2, re.MatchString(str2))
+    fmt.Printf("\nEmail: %v :%v\n", email, validEmail(email))
+
  
 }
