@@ -1,4 +1,3 @@
-```yaml
 title: App w/ missing version
 maintainers:
 - name: first last
@@ -12,4 +11,3 @@ license: Apache-2.0
 description: |
  ### blob of markdown
  More markdown
-```

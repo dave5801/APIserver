@@ -42,9 +42,9 @@ func main(){
 
     fmt.Printf("Title: %#v\n", metaDataConfig.Title)
     fmt.Printf("Version: %#v\n", metaDataConfig.Version)
-    fmt.Printf("Maintainers:\n")
-    fmt.Printf("    Email: %#v\n", metaDataConfig.Maintainers[0]["email"])
-    fmt.Printf("    Name:  %#v\n", metaDataConfig.Maintainers[0]["name"])
+    fmt.Printf("Maintainers:\n")//NOTE -- Maintainers will likely need to be iterated upon
+    fmt.Printf("    Email: %#v\n", metaDataConfig.Maintainers[1]["email"])
+    fmt.Printf("    Name:  %#v\n", metaDataConfig.Maintainers[1]["name"])
     fmt.Printf("Company: %#v\n", metaDataConfig.Company)
     fmt.Printf("Website: %#v\n", metaDataConfig.Website)
     fmt.Printf("Source: %#v\n", metaDataConfig.Source)
