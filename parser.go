@@ -32,10 +32,6 @@ func parseMetaDataFromYML(filename string) MetaDataConfig{
     
     err = yaml.Unmarshal(yamlFile, &metaDataConfig)
     
-    if err != nil {
-        panic(err)
-    }
-    
     return metaDataConfig
 }
 
