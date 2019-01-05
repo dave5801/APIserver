@@ -6,6 +6,7 @@ import (
     "path/filepath"
     "regexp" //note - for validation
    // "net/url" //note - for validation
+    "metaDataConfig"
 
     "gopkg.in/yaml.v2"
 )
@@ -17,6 +18,7 @@ type validator interface{
 }
 
 //structure for yml file
+/*
 type MetaDataConfig struct{
     Title string
     Version string
@@ -26,7 +28,7 @@ type MetaDataConfig struct{
     Source string
     License string
     Description string
-}
+}*/
 
 func (metaDataConfig MetaDataConfig) validateMaintainerEmail() bool{
     //regex from http://www.golangprograms.com/regular-expression-to-validate-email-address.html
@@ -35,16 +37,12 @@ func (metaDataConfig MetaDataConfig) validateMaintainerEmail() bool{
 }
 
 func Validate(v validator) string{
-    //fmt.Println(v)
-    //fmt.Println(v.validateMaintainerEmail())
-
+ 
     if v.validateMaintainerEmail() == false{
         return "MetaData is invalid"
     }else{
         return "MetaData is valid"
     }
-
-  //  fmt.Println(v.validateURL())
 }
 
 func parseMetaDataFromYML(filename string) MetaDataConfig{
