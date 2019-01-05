@@ -17,12 +17,15 @@ type validator interface{
     validateURL() bool
 }
 
+//MAYBE IMPORT METADATACONFIG HERE
+
 type YmlFile struct {
     Email string
     Url string
 }
 
 func (ymlFile YmlFile) validateEmail() bool{
+    //regex from http://www.golangprograms.com/regular-expression-to-validate-email-address.html
     re := regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
     return re.MatchString(ymlFile.Email)
 }
