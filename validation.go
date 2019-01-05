@@ -17,6 +17,8 @@ type validator interface{
     validateURL() bool
 }
 
+//MAYBE IMPORT METADATACONFIG HERE
+
 type YmlFile struct {
     Email string
     Url string
