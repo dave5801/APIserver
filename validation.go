@@ -8,10 +8,11 @@ import (
  /*
     Need
         X - emails
-        urls
+        X - urls
         missing fields
  */
 
+/*
 func validEmail(email string) bool{
     re := regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
     return re.MatchString(email)
@@ -24,10 +25,38 @@ func isValidUrl(Url string) bool {
     } else {
         return true
     }
+}*/
+
+type validator interface{
+    validateEmail() bool
+    validateURL() bool
 }
 
+type YmlFile struct {
+    Email string
+    Url string
+}
+
+func (ymlFile YmlFile) validateEmail() bool{
+    re := regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
+    return re.MatchString(ymlFile.Email)
+}
+
+func (ymlFile YmlFile) validateURL() bool{
+     _, err := url.ParseRequestURI(ymlFile.Url)
+    if err != nil {
+        return false
+    } else {
+        return true
+    }
+}
+
+//func validEmail(email string) bool{}
+
 func main() {
-    
+    v := YmlFile{"apptwohotmail.com", "http://www.golangcode.com"}
+    fmt.Printf(v.Email)
+    /*
     email := "apptwohotmail.com"
 
     fmt.Printf("\nEmail: %v :%v\n", email, validEmail(email))
@@ -37,7 +66,7 @@ func main() {
     fmt.Println(isValidUrl("golangcode.com"))
 
     // = false
-    fmt.Println(isValidUrl(""))
+    fmt.Println(isValidUrl(""))*/
 
  
 }

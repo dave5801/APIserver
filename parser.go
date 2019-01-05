@@ -37,7 +37,7 @@ func parseMetaDataFromYML(filename string) MetaDataConfig{
 
 func main(){
   
-    filename, _ := filepath.Abs("./metadata/test1.yml")
+    filename, _ := filepath.Abs("./metadata/test3.yml")
     metaDataConfig := parseMetaDataFromYML(filename)
 
     fmt.Printf("Title: %#v\n", metaDataConfig.Title)
