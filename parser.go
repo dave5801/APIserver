@@ -12,7 +12,7 @@ import (
 
 //NOTE - this will be moved to another file
 type validator interface{
-    validateEmail() bool
+    validateMaintainerEmail() bool
    // validateURL() bool
 }
 
@@ -28,15 +28,22 @@ type MetaDataConfig struct{
     Description string
 }
 
-func (metaDataConfig MetaDataConfig) validateEmail() bool{
+func (metaDataConfig MetaDataConfig) validateMaintainerEmail() bool{
     //regex from http://www.golangprograms.com/regular-expression-to-validate-email-address.html
     re := regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
     return re.MatchString(metaDataConfig.Maintainers[0]["email"])
 }
 
-func Validate(v validator){
-    fmt.Println(v)
-    fmt.Println(v.validateEmail())
+func Validate(v validator) string{
+    //fmt.Println(v)
+    //fmt.Println(v.validateMaintainerEmail())
+
+    if v.validateMaintainerEmail() == false{
+        return "MetaData is invalid"
+    }else{
+        return "MetaData is valid"
+    }
+
   //  fmt.Println(v.validateURL())
 }
 
@@ -59,7 +66,8 @@ func main(){
   
     filename, _ := filepath.Abs("./metadata/test1.yml")
     metaDataConfig := parseMetaDataFromYML(filename)
-    Validate(metaDataConfig)
+    isMetaDataValid := Validate(metaDataConfig)
+    fmt.Println(isMetaDataValid)
 
     /*
     fmt.Printf("Title: %#v\n", metaDataConfig.Title)
