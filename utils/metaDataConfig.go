@@ -1,5 +1,4 @@
-package metaDataConfig
-
+package utils
 //structure for yml file
 type MetaDataConfig struct{
     Title string

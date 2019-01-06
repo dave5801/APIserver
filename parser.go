@@ -2,13 +2,14 @@ package main
 //https://stackoverflow.com/questions/28682439/go-parse-yaml-file
 import (
     "fmt"
-    "io/ioutil"
-    "path/filepath"
-    "regexp" //note - for validation
+    "github/dave5801/APIserver/utils"
+   // "io/ioutil"
+   // "path/filepath"
+   // "regexp" //note - for validation
    // "net/url" //note - for validation
-    "metaDataConfig"
+    //"metaDataConfig"
 
-    "gopkg.in/yaml.v2"
+    //"gopkg.in/yaml.v2"
 )
 
 //NOTE - this will be moved to another file
@@ -30,6 +31,7 @@ type MetaDataConfig struct{
     Description string
 }*/
 
+/*
 func (metaDataConfig MetaDataConfig) validateMaintainerEmail() bool{
     //regex from http://www.golangprograms.com/regular-expression-to-validate-email-address.html
     re := regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
@@ -43,8 +45,9 @@ func Validate(v validator) string{
     }else{
         return "MetaData is valid"
     }
-}
+}*/
 
+/*
 func parseMetaDataFromYML(filename string) MetaDataConfig{
 
     yamlFile, err := ioutil.ReadFile(filename)
@@ -58,14 +61,16 @@ func parseMetaDataFromYML(filename string) MetaDataConfig{
     err = yaml.Unmarshal(yamlFile, &metaDataConfig)
     
     return metaDataConfig
-}
+}*/
 
 func main(){
-  
-    filename, _ := filepath.Abs("./metadata/test1.yml")
+    fmt.Println("Hello World")
+    var metaDataConfig utils.MetaDataConfig
+    //filename, _ := filepath.Abs("./metadata/test1.yml")
+    /*
     metaDataConfig := parseMetaDataFromYML(filename)
     isMetaDataValid := Validate(metaDataConfig)
-    fmt.Println(isMetaDataValid)
+    fmt.Println(isMetaDataValid)*/
 
     /*
     fmt.Printf("Title: %#v\n", metaDataConfig.Title)
