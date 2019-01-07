@@ -93,7 +93,6 @@ func main(){
     filename, _ := filepath.Abs("./metadata/test4.yml")
     
     parsedMetaDataConfig := parseMetaDataFromYML(filename)
-    fmt.Println(parsedMetaDataConfig)
     isMetaDataValid := Validate(parsedMetaDataConfig)
     fmt.Println(isMetaDataValid)
 
