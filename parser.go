@@ -6,6 +6,7 @@ import (
     "path/filepath"
     "regexp" //note - for validation
     "net/url" //note - for validation
+    "reflect"
 
     "gopkg.in/yaml.v2"
 )
@@ -14,6 +15,7 @@ import (
 type validator interface{
     validateMaintainerEmail() bool
     validateURL() bool
+    validateFields() bool
 }
 
 //structure for yml file
@@ -28,14 +30,12 @@ type MetaDataConfig struct{
     Description string
 }
 
-/**/
 func (metaDataConfig MetaDataConfig) validateMaintainerEmail() bool{
     //CITATION: regex from http://www.golangprograms.com/regular-expression-to-validate-email-address.html
     re := regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
     return re.MatchString(metaDataConfig.Maintainers[0]["email"])
     
 }
-
 
 func (metaDataConfig MetaDataConfig) validateURL() bool{
 
@@ -49,21 +49,30 @@ func (metaDataConfig MetaDataConfig) validateURL() bool{
     }
 }
 
-func Validate(v validator) string{
- 
-    /**/
-    if v.validateMaintainerEmail() == false{
-        return "Maintainer email is invalid"
-    }else{
-        return "MetaData is valid"
+func (metaDataConfig MetaDataConfig) validateFields() bool{
+
+    copyConfig := reflect.ValueOf(metaDataConfig)
+    ymlFieldValues := make([]interface{}, copyConfig.NumField())
+
+    for i:= 0; i < copyConfig.NumField(); i++{
+        ymlFieldValues[i] = copyConfig.Field(i).Interface()
+        if copyConfig.Field(i).Interface() == ""{
+            return false
+        }
     }
 
-    if v.validateURL() == false{
-        return "Website and Source Urls are invalid"
+    fmt.Println("Values here ", ymlFieldValues)
+
+    return true
+}
+
+func Validate(v validator) string{
+
+    if v.validateFields()==false || v.validateMaintainerEmail()==false || v.validateURL() == false{
+        return "Found an Invalid file"
     }else{
-        return "Website and Source Urls are valid"
-    }
-    
+        return "It's all good"
+    }    
 }
 
 func parseMetaDataFromYML(filename string) MetaDataConfig{
@@ -77,15 +86,13 @@ func parseMetaDataFromYML(filename string) MetaDataConfig{
     var metaDataConfig MetaDataConfig
     
     err = yaml.Unmarshal(yamlFile, &metaDataConfig)
-    
     return metaDataConfig
 }
 
 func main(){
-    filename, _ := filepath.Abs("./metadata/test1.yml")
+    filename, _ := filepath.Abs("./metadata/test4.yml")
     
     parsedMetaDataConfig := parseMetaDataFromYML(filename)
-    //fmt.Println(parsedMetaDataConfig)
     isMetaDataValid := Validate(parsedMetaDataConfig)
     fmt.Println(isMetaDataValid)
 
