@@ -13,8 +13,7 @@ import (
 //NOTE - this will be moved to another file
 type validator interface{
     validateMaintainerEmail() bool
-    //validateMaintainerEmail() bool
-   // validateURL() bool
+    validateURL() bool
 }
 
 //structure for yml file
@@ -31,7 +30,7 @@ type MetaDataConfig struct{
 
 /**/
 func (metaDataConfig MetaDataConfig) validateMaintainerEmail() bool{
-    //regex from http://www.golangprograms.com/regular-expression-to-validate-email-address.html
+    //CITATION: regex from http://www.golangprograms.com/regular-expression-to-validate-email-address.html
     re := regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
     return re.MatchString(metaDataConfig.Maintainers[0]["email"])
     
@@ -39,8 +38,11 @@ func (metaDataConfig MetaDataConfig) validateMaintainerEmail() bool{
 
 
 func (metaDataConfig MetaDataConfig) validateURL() bool{
-     _, err := url.ParseRequestURI(metaDataConfig.Website)
-    if err != nil {
+
+    _, webSiteErr := url.ParseRequestURI(metaDataConfig.Website)
+    _, sourceErr := url.ParseRequestURI(metaDataConfig.Source)
+    
+    if webSiteErr != nil || sourceErr != nil {
         return false
     } else {
         return true
@@ -49,10 +51,17 @@ func (metaDataConfig MetaDataConfig) validateURL() bool{
 
 func Validate(v validator) string{
  
+    /**/
     if v.validateMaintainerEmail() == false{
         return "Maintainer email is invalid"
     }else{
         return "MetaData is valid"
+    }
+
+    if v.validateURL() == false{
+        return "Website and Source Urls are invalid"
+    }else{
+        return "Website and Source Urls are valid"
     }
     
 }
