@@ -2,11 +2,11 @@ package main
 //https://stackoverflow.com/questions/28682439/go-parse-yaml-file
 import (
     "fmt"
-    "github/dave5801/APIserver/utils"
+    //"github/dave5801/APIserver/utils"
     "io/ioutil"
     "path/filepath"
-   // "regexp" //note - for validation
-   // "net/url" //note - for validation
+    "regexp" //note - for validation
+    //"net/url" //note - for validation
     //"metaDataConfig"
 
     "gopkg.in/yaml.v2"
@@ -15,11 +15,11 @@ import (
 //NOTE - this will be moved to another file
 type validator interface{
     validateMaintainerEmail() bool
+    //validateMaintainerEmail() bool
    // validateURL() bool
 }
 
 //structure for yml file
-/*
 type MetaDataConfig struct{
     Title string
     Version string
@@ -29,13 +29,14 @@ type MetaDataConfig struct{
     Source string
     License string
     Description string
-}*/
+}
 
-/*
+/**/
 func (metaDataConfig MetaDataConfig) validateMaintainerEmail() bool{
     //regex from http://www.golangprograms.com/regular-expression-to-validate-email-address.html
     re := regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
     return re.MatchString(metaDataConfig.Maintainers[0]["email"])
+    
 }
 
 func Validate(v validator) string{
@@ -45,10 +46,11 @@ func Validate(v validator) string{
     }else{
         return "MetaData is valid"
     }
-}*/
+    
+}
 
 /**/
-func parseMetaDataFromYML(filename string) utils.MetaDataConfig{
+func parseMetaDataFromYML(filename string) MetaDataConfig{
 
     yamlFile, err := ioutil.ReadFile(filename)
 
@@ -56,7 +58,7 @@ func parseMetaDataFromYML(filename string) utils.MetaDataConfig{
         panic(err)
     }
 
-    var metaDataConfig utils.MetaDataConfig
+    var metaDataConfig MetaDataConfig
     
     err = yaml.Unmarshal(yamlFile, &metaDataConfig)
     
@@ -70,8 +72,8 @@ func main(){
     
     parsedMetaDataConfig := parseMetaDataFromYML(filename)
     fmt.Println(parsedMetaDataConfig)
-    //isMetaDataValid := Validate(metaDataConfig)
-    //fmt.Println(isMetaDataValid)
+    isMetaDataValid := Validate(parsedMetaDataConfig)
+    fmt.Println(isMetaDataValid)
 
     /*
     fmt.Printf("Title: %#v\n", metaDataConfig.Title)
