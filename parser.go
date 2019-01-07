@@ -3,13 +3,13 @@ package main
 import (
     "fmt"
     "github/dave5801/APIserver/utils"
-   // "io/ioutil"
-   // "path/filepath"
+    "io/ioutil"
+    "path/filepath"
    // "regexp" //note - for validation
    // "net/url" //note - for validation
     //"metaDataConfig"
 
-    //"gopkg.in/yaml.v2"
+    "gopkg.in/yaml.v2"
 )
 
 //NOTE - this will be moved to another file
@@ -47,8 +47,8 @@ func Validate(v validator) string{
     }
 }*/
 
-/*
-func parseMetaDataFromYML(filename string) MetaDataConfig{
+/**/
+func parseMetaDataFromYML(filename string) utils.MetaDataConfig{
 
     yamlFile, err := ioutil.ReadFile(filename)
 
@@ -56,21 +56,22 @@ func parseMetaDataFromYML(filename string) MetaDataConfig{
         panic(err)
     }
 
-    var metaDataConfig MetaDataConfig
+    var metaDataConfig utils.MetaDataConfig
     
     err = yaml.Unmarshal(yamlFile, &metaDataConfig)
     
     return metaDataConfig
-}*/
+}
 
 func main(){
     fmt.Println("Hello World")
-    var metaDataConfig utils.MetaDataConfig
-    //filename, _ := filepath.Abs("./metadata/test1.yml")
-    /*
-    metaDataConfig := parseMetaDataFromYML(filename)
-    isMetaDataValid := Validate(metaDataConfig)
-    fmt.Println(isMetaDataValid)*/
+   // var metaDataConfig utils.MetaDataConfig
+    filename, _ := filepath.Abs("./metadata/test1.yml")
+    
+    parsedMetaDataConfig := parseMetaDataFromYML(filename)
+    fmt.Println(parsedMetaDataConfig)
+    //isMetaDataValid := Validate(metaDataConfig)
+    //fmt.Println(isMetaDataValid)
 
     /*
     fmt.Printf("Title: %#v\n", metaDataConfig.Title)
