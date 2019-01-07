@@ -2,12 +2,10 @@ package main
 //https://stackoverflow.com/questions/28682439/go-parse-yaml-file
 import (
     "fmt"
-    //"github/dave5801/APIserver/utils"
     "io/ioutil"
     "path/filepath"
     "regexp" //note - for validation
-    //"net/url" //note - for validation
-    //"metaDataConfig"
+    "net/url" //note - for validation
 
     "gopkg.in/yaml.v2"
 )
@@ -39,17 +37,26 @@ func (metaDataConfig MetaDataConfig) validateMaintainerEmail() bool{
     
 }
 
+
+func (metaDataConfig MetaDataConfig) validateURL() bool{
+     _, err := url.ParseRequestURI(metaDataConfig.Website)
+    if err != nil {
+        return false
+    } else {
+        return true
+    }
+}
+
 func Validate(v validator) string{
  
     if v.validateMaintainerEmail() == false{
-        return "MetaData is invalid"
+        return "Maintainer email is invalid"
     }else{
         return "MetaData is valid"
     }
     
 }
 
-/**/
 func parseMetaDataFromYML(filename string) MetaDataConfig{
 
     yamlFile, err := ioutil.ReadFile(filename)
@@ -66,12 +73,10 @@ func parseMetaDataFromYML(filename string) MetaDataConfig{
 }
 
 func main(){
-    fmt.Println("Hello World")
-   // var metaDataConfig utils.MetaDataConfig
     filename, _ := filepath.Abs("./metadata/test1.yml")
     
     parsedMetaDataConfig := parseMetaDataFromYML(filename)
-    fmt.Println(parsedMetaDataConfig)
+    //fmt.Println(parsedMetaDataConfig)
     isMetaDataValid := Validate(parsedMetaDataConfig)
     fmt.Println(isMetaDataValid)
 
