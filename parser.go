@@ -59,11 +59,14 @@ func (metaDataConfig MetaDataConfig) validateFields() bool{
 
     for i:= 0; i < copyConfig.NumField(); i++{
         ymlFieldValues[i] = copyConfig.Field(i).Interface()
+        if copyConfig.Field(i).Interface() == ""{
+            return false
+        }
     }
 
-    fmt.Println(ymlFieldValues)
+    fmt.Println("Values here ", ymlFieldValues)
 
-    return false
+    return true
 }
 
 func Validate(v validator) string{
