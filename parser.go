@@ -6,6 +6,7 @@ import (
     "path/filepath"
     "regexp" //note - for validation
     "net/url" //note - for validation
+    "reflect"
 
     "gopkg.in/yaml.v2"
 )
@@ -14,6 +15,7 @@ import (
 type validator interface{
     validateMaintainerEmail() bool
     validateURL() bool
+    validateFields() bool
 }
 
 //structure for yml file
@@ -49,8 +51,30 @@ func (metaDataConfig MetaDataConfig) validateURL() bool{
     }
 }
 
+func (metaDataConfig MetaDataConfig) validateFields() bool{
+
+    copyConfig := reflect.ValueOf(metaDataConfig)
+
+    ymlFieldValues := make([]interface{}, copyConfig.NumField())
+
+    for i:= 0; i < copyConfig.NumField(); i++{
+        ymlFieldValues[i] = copyConfig.Field(i).Interface()
+    }
+
+    fmt.Println(ymlFieldValues)
+
+    return false
+}
+
 func Validate(v validator) string{
  
+    if v.validateFields()==false{
+        return "Found an Empty Field"
+    }else{
+        return "It's all good"
+    }
+
+    /*
     if v.validateMaintainerEmail() == false{
         return "Maintainer email is invalid"
     }else{
@@ -61,7 +85,7 @@ func Validate(v validator) string{
         return "Website and Source Urls are invalid"
     }else{
         return "Website and Source Urls are valid"
-    }
+    }*/
     
 }
 
