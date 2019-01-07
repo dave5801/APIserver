@@ -30,14 +30,12 @@ type MetaDataConfig struct{
     Description string
 }
 
-/**/
 func (metaDataConfig MetaDataConfig) validateMaintainerEmail() bool{
     //CITATION: regex from http://www.golangprograms.com/regular-expression-to-validate-email-address.html
     re := regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
     return re.MatchString(metaDataConfig.Maintainers[0]["email"])
     
 }
-
 
 func (metaDataConfig MetaDataConfig) validateURL() bool{
 
@@ -54,7 +52,6 @@ func (metaDataConfig MetaDataConfig) validateURL() bool{
 func (metaDataConfig MetaDataConfig) validateFields() bool{
 
     copyConfig := reflect.ValueOf(metaDataConfig)
-
     ymlFieldValues := make([]interface{}, copyConfig.NumField())
 
     for i:= 0; i < copyConfig.NumField(); i++{
@@ -70,26 +67,12 @@ func (metaDataConfig MetaDataConfig) validateFields() bool{
 }
 
 func Validate(v validator) string{
- 
-    if v.validateFields()==false{
-        return "Found an Empty Field"
+
+    if v.validateFields()==false || v.validateMaintainerEmail()==false || v.validateURL() == false{
+        return "Found an Invalid file"
     }else{
         return "It's all good"
-    }
-
-    /*
-    if v.validateMaintainerEmail() == false{
-        return "Maintainer email is invalid"
-    }else{
-        return "MetaData is valid"
-    }
-
-    if v.validateURL() == false{
-        return "Website and Source Urls are invalid"
-    }else{
-        return "Website and Source Urls are valid"
-    }*/
-    
+    }    
 }
 
 func parseMetaDataFromYML(filename string) MetaDataConfig{
@@ -103,15 +86,14 @@ func parseMetaDataFromYML(filename string) MetaDataConfig{
     var metaDataConfig MetaDataConfig
     
     err = yaml.Unmarshal(yamlFile, &metaDataConfig)
-    
     return metaDataConfig
 }
 
 func main(){
-    filename, _ := filepath.Abs("./metadata/test1.yml")
+    filename, _ := filepath.Abs("./metadata/test4.yml")
     
     parsedMetaDataConfig := parseMetaDataFromYML(filename)
-    //fmt.Println(parsedMetaDataConfig)
+    fmt.Println(parsedMetaDataConfig)
     isMetaDataValid := Validate(parsedMetaDataConfig)
     fmt.Println(isMetaDataValid)
 
