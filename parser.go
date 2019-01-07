@@ -51,7 +51,6 @@ func (metaDataConfig MetaDataConfig) validateURL() bool{
 
 func Validate(v validator) string{
  
-    /**/
     if v.validateMaintainerEmail() == false{
         return "Maintainer email is invalid"
     }else{
