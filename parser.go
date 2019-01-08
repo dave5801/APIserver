@@ -76,20 +76,6 @@ func Validate(v validator) bool{
     }    
 }
 
-func parseMetaDataFromYML(filename string) MetaDataConfig{
-
-    yamlFile, err := ioutil.ReadFile(filename)
-
-    if err != nil {
-        panic(err)
-    }
-
-    var metaDataConfig MetaDataConfig
-    
-    err = yaml.Unmarshal(yamlFile, &metaDataConfig)
-    return metaDataConfig
-}
-
 func returnValidConfigFiles() []MetaDataConfig {
 
     files, err := ioutil.ReadDir("./metadata/")
