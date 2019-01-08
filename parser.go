@@ -90,13 +90,8 @@ func parseMetaDataFromYML(filename string) MetaDataConfig{
     return metaDataConfig
 }
 
-func main(){
-    /*
-    filename, _ := filepath.Abs("./metadata/test4.yml")
-    
-    parsedMetaDataConfig := parseMetaDataFromYML(filename)
-    isMetaDataValid := Validate(parsedMetaDataConfig)
-    fmt.Println(isMetaDataValid)*/
+func returnValidConfigFiles() []MetaDataConfig {
+
     files, err := ioutil.ReadDir("./metadata/")
     if err != nil {
         log.Fatal(err)
@@ -114,13 +109,48 @@ func main(){
     
             err = yaml.Unmarshal(yamlFile, &metaDataConfig)
             if Validate(metaDataConfig) == true{
-               // fmt.Println(metaDataConfig)
+                arrayOfMetaDataConfigFiles = append(arrayOfMetaDataConfigFiles, metaDataConfig)
+            }    
+    }
+
+    return arrayOfMetaDataConfigFiles
+}
+
+func main(){
+    fmt.Println(returnValidConfigFiles())
+    
+
+    /*
+    filename, _ := filepath.Abs("./metadata/test4.yml")
+    
+    parsedMetaDataConfig := parseMetaDataFromYML(filename)
+    isMetaDataValid := Validate(parsedMetaDataConfig)
+    fmt.Println(isMetaDataValid)*/
+
+    /*
+    files, err := ioutil.ReadDir("./metadata/")
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    var arrayOfMetaDataConfigFiles[] MetaDataConfig 
+
+    for _, f := range files {
+
+            yamlFile, err := ioutil.ReadFile("./metadata/" + f.Name())
+            if err != nil {
+                panic(err)
+            }
+            var metaDataConfig MetaDataConfig
+    
+            err = yaml.Unmarshal(yamlFile, &metaDataConfig)
+            if Validate(metaDataConfig) == true{
                 arrayOfMetaDataConfigFiles = append(arrayOfMetaDataConfigFiles, metaDataConfig)
             }
             
     }
 
-    fmt.Println(arrayOfMetaDataConfigFiles)
+    fmt.Println(arrayOfMetaDataConfigFiles)*/
 
     /*
     fmt.Printf("Title: %#v\n", metaDataConfig.Title)
