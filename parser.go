@@ -102,6 +102,8 @@ func main(){
         log.Fatal(err)
     }
 
+    var arrayOfMetaDataConfigFiles[] MetaDataConfig 
+
     for _, f := range files {
 
             yamlFile, err := ioutil.ReadFile("./metadata/" + f.Name())
@@ -112,10 +114,13 @@ func main(){
     
             err = yaml.Unmarshal(yamlFile, &metaDataConfig)
             if Validate(metaDataConfig) == true{
-                fmt.Println(metaDataConfig)
+               // fmt.Println(metaDataConfig)
+                arrayOfMetaDataConfigFiles = append(arrayOfMetaDataConfigFiles, metaDataConfig)
             }
             
     }
+
+    fmt.Println(arrayOfMetaDataConfigFiles)
 
     /*
     fmt.Printf("Title: %#v\n", metaDataConfig.Title)
