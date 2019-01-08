@@ -117,41 +117,10 @@ func returnValidConfigFiles() []MetaDataConfig {
 }
 
 func main(){
-    fmt.Println(returnValidConfigFiles())
+
+    arrayOfMetaDataConfigFiles := returnValidConfigFiles()
+    fmt.Println(arrayOfMetaDataConfigFiles)
     
-
-    /*
-    filename, _ := filepath.Abs("./metadata/test4.yml")
-    
-    parsedMetaDataConfig := parseMetaDataFromYML(filename)
-    isMetaDataValid := Validate(parsedMetaDataConfig)
-    fmt.Println(isMetaDataValid)*/
-
-    /*
-    files, err := ioutil.ReadDir("./metadata/")
-    if err != nil {
-        log.Fatal(err)
-    }
-
-    var arrayOfMetaDataConfigFiles[] MetaDataConfig 
-
-    for _, f := range files {
-
-            yamlFile, err := ioutil.ReadFile("./metadata/" + f.Name())
-            if err != nil {
-                panic(err)
-            }
-            var metaDataConfig MetaDataConfig
-    
-            err = yaml.Unmarshal(yamlFile, &metaDataConfig)
-            if Validate(metaDataConfig) == true{
-                arrayOfMetaDataConfigFiles = append(arrayOfMetaDataConfigFiles, metaDataConfig)
-            }
-            
-    }
-
-    fmt.Println(arrayOfMetaDataConfigFiles)*/
-
     /*
     fmt.Printf("Title: %#v\n", metaDataConfig.Title)
     fmt.Printf("Version: %#v\n", metaDataConfig.Version)
