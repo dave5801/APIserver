@@ -3,10 +3,11 @@ package main
 import (
     "fmt"
     "io/ioutil"
-    "path/filepath"
+   // "path/filepath"
     "regexp" //note - for validation
     "net/url" //note - for validation
     "reflect"
+    "log"
 
     "gopkg.in/yaml.v2"
 )
@@ -90,11 +91,31 @@ func parseMetaDataFromYML(filename string) MetaDataConfig{
 }
 
 func main(){
+    /*
     filename, _ := filepath.Abs("./metadata/test4.yml")
     
     parsedMetaDataConfig := parseMetaDataFromYML(filename)
     isMetaDataValid := Validate(parsedMetaDataConfig)
-    fmt.Println(isMetaDataValid)
+    fmt.Println(isMetaDataValid)*/
+    files, err := ioutil.ReadDir("./metadata/")
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    for _, f := range files {
+
+            //fmt.Println("./metadata/" + f.Name())
+            yamlFile, err := ioutil.ReadFile("./metadata/" + f.Name())
+            if err != nil {
+                panic(err)
+            }
+            //fmt.Println(yamlFile)
+            var metaDataConfig MetaDataConfig
+    
+            err = yaml.Unmarshal(yamlFile, &metaDataConfig)
+            fmt.Println(metaDataConfig)
+
+    }
 
     /*
     fmt.Printf("Title: %#v\n", metaDataConfig.Title)
