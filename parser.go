@@ -3,10 +3,11 @@ package main
 import (
     "fmt"
     "io/ioutil"
-    "path/filepath"
+   // "path/filepath"
     "regexp" //note - for validation
     "net/url" //note - for validation
     "reflect"
+    "log"
 
     "gopkg.in/yaml.v2"
 )
@@ -61,17 +62,17 @@ func (metaDataConfig MetaDataConfig) validateFields() bool{
         }
     }
 
-    fmt.Println("Values here ", ymlFieldValues)
+    //fmt.Println("Values here ", ymlFieldValues)
 
     return true
 }
 
-func Validate(v validator) string{
+func Validate(v validator) bool{
 
     if v.validateFields()==false || v.validateMaintainerEmail()==false || v.validateURL() == false{
-        return "Found an Invalid file"
+        return false
     }else{
-        return "It's all good"
+        return true
     }    
 }
 
@@ -90,11 +91,31 @@ func parseMetaDataFromYML(filename string) MetaDataConfig{
 }
 
 func main(){
+    /*
     filename, _ := filepath.Abs("./metadata/test4.yml")
     
     parsedMetaDataConfig := parseMetaDataFromYML(filename)
     isMetaDataValid := Validate(parsedMetaDataConfig)
-    fmt.Println(isMetaDataValid)
+    fmt.Println(isMetaDataValid)*/
+    files, err := ioutil.ReadDir("./metadata/")
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    for _, f := range files {
+
+            yamlFile, err := ioutil.ReadFile("./metadata/" + f.Name())
+            if err != nil {
+                panic(err)
+            }
+            var metaDataConfig MetaDataConfig
+    
+            err = yaml.Unmarshal(yamlFile, &metaDataConfig)
+            if Validate(metaDataConfig) == true{
+                fmt.Println(metaDataConfig)
+            }
+            
+    }
 
     /*
     fmt.Printf("Title: %#v\n", metaDataConfig.Title)

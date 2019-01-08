@@ -1,4 +1,3 @@
-```yaml
 title: App w/ Invalid maintainer email
 version: 1.0.1
 maintainers:
@@ -11,4 +10,3 @@ license: Apache-2.0
 description: |
  ### blob of markdown
  More markdown
-```
