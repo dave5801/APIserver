@@ -62,17 +62,17 @@ func (metaDataConfig MetaDataConfig) validateFields() bool{
         }
     }
 
-    fmt.Println("Values here ", ymlFieldValues)
+    //fmt.Println("Values here ", ymlFieldValues)
 
     return true
 }
 
-func Validate(v validator) string{
+func Validate(v validator) bool{
 
     if v.validateFields()==false || v.validateMaintainerEmail()==false || v.validateURL() == false{
-        return "Found an Invalid file"
+        return false
     }else{
-        return "It's all good"
+        return true
     }    
 }
 
@@ -104,17 +104,17 @@ func main(){
 
     for _, f := range files {
 
-            //fmt.Println("./metadata/" + f.Name())
             yamlFile, err := ioutil.ReadFile("./metadata/" + f.Name())
             if err != nil {
                 panic(err)
             }
-            //fmt.Println(yamlFile)
             var metaDataConfig MetaDataConfig
     
             err = yaml.Unmarshal(yamlFile, &metaDataConfig)
-            fmt.Println(metaDataConfig)
-
+            if Validate(metaDataConfig) == true{
+                fmt.Println(metaDataConfig)
+            }
+            
     }
 
     /*
