@@ -1,14 +1,12 @@
 package main
-//https://stackoverflow.com/questions/28682439/go-parse-yaml-file
+
 import (
     "fmt"
     "io/ioutil"
-   // "path/filepath"
-    "regexp" //note - for validation
-    "net/url" //note - for validation
+    "regexp" 
+    "net/url" 
     "reflect"
     "log"
-
     "gopkg.in/yaml.v2"
 )
 
@@ -62,8 +60,6 @@ func (metaDataConfig MetaDataConfig) validateFields() bool{
         }
     }
 
-    //fmt.Println("Values here ", ymlFieldValues)
-
     return true
 }
 
@@ -76,35 +72,18 @@ func Validate(v validator) bool{
     }    
 }
 
-func parseMetaDataFromYML(filename string) MetaDataConfig{
+func returnValidConfigFiles(configFilDirPath string) []MetaDataConfig {
 
-    yamlFile, err := ioutil.ReadFile(filename)
-
-    if err != nil {
-        panic(err)
-    }
-
-    var metaDataConfig MetaDataConfig
-    
-    err = yaml.Unmarshal(yamlFile, &metaDataConfig)
-    return metaDataConfig
-}
-
-func main(){
-    /*
-    filename, _ := filepath.Abs("./metadata/test4.yml")
-    
-    parsedMetaDataConfig := parseMetaDataFromYML(filename)
-    isMetaDataValid := Validate(parsedMetaDataConfig)
-    fmt.Println(isMetaDataValid)*/
-    files, err := ioutil.ReadDir("./metadata/")
+    files, err := ioutil.ReadDir(configFilDirPath)
     if err != nil {
         log.Fatal(err)
     }
 
+    var arrayOfMetaDataConfigFiles[] MetaDataConfig 
+
     for _, f := range files {
 
-            yamlFile, err := ioutil.ReadFile("./metadata/" + f.Name())
+            yamlFile, err := ioutil.ReadFile(configFilDirPath + f.Name())
             if err != nil {
                 panic(err)
             }
@@ -112,11 +91,18 @@ func main(){
     
             err = yaml.Unmarshal(yamlFile, &metaDataConfig)
             if Validate(metaDataConfig) == true{
-                fmt.Println(metaDataConfig)
-            }
-            
+                arrayOfMetaDataConfigFiles = append(arrayOfMetaDataConfigFiles, metaDataConfig)
+            }    
     }
 
+    return arrayOfMetaDataConfigFiles
+}
+
+func main(){
+
+    arrayOfValidMetaDataConfigFiles := returnValidConfigFiles("./metadata/")
+    fmt.Println(arrayOfValidMetaDataConfigFiles)
+    
     /*
     fmt.Printf("Title: %#v\n", metaDataConfig.Title)
     fmt.Printf("Version: %#v\n", metaDataConfig.Version)
