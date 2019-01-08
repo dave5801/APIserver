@@ -1,14 +1,12 @@
 package main
-//https://stackoverflow.com/questions/28682439/go-parse-yaml-file
+
 import (
     "fmt"
     "io/ioutil"
-   // "path/filepath"
-    "regexp" //note - for validation
-    "net/url" //note - for validation
+    "regexp" 
+    "net/url" 
     "reflect"
     "log"
-
     "gopkg.in/yaml.v2"
 )
 
@@ -62,8 +60,6 @@ func (metaDataConfig MetaDataConfig) validateFields() bool{
         }
     }
 
-    //fmt.Println("Values here ", ymlFieldValues)
-
     return true
 }
 
@@ -76,9 +72,9 @@ func Validate(v validator) bool{
     }    
 }
 
-func returnValidConfigFiles() []MetaDataConfig {
+func returnValidConfigFiles(configFilDirPath string) []MetaDataConfig {
 
-    files, err := ioutil.ReadDir("./metadata/")
+    files, err := ioutil.ReadDir(configFilDirPath)
     if err != nil {
         log.Fatal(err)
     }
@@ -87,7 +83,7 @@ func returnValidConfigFiles() []MetaDataConfig {
 
     for _, f := range files {
 
-            yamlFile, err := ioutil.ReadFile("./metadata/" + f.Name())
+            yamlFile, err := ioutil.ReadFile(configFilDirPath + f.Name())
             if err != nil {
                 panic(err)
             }
@@ -104,8 +100,8 @@ func returnValidConfigFiles() []MetaDataConfig {
 
 func main(){
 
-    arrayOfMetaDataConfigFiles := returnValidConfigFiles()
-    fmt.Println(arrayOfMetaDataConfigFiles)
+    arrayOfValidMetaDataConfigFiles := returnValidConfigFiles("./metadata/")
+    fmt.Println(arrayOfValidMetaDataConfigFiles)
     
     /*
     fmt.Printf("Title: %#v\n", metaDataConfig.Title)
