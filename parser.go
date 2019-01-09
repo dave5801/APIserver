@@ -104,9 +104,10 @@ func returnValidConfigFiles(configFilDirPath string) []MetaDataConfig {
     return arrayOfMetaDataConfigFiles
 }
 
-func GetPeople(w http.ResponseWriter, r *http.Request) {
-    //json.NewEncoder(w).Encode("Yamels Go Here")
+func GetConfigs(w http.ResponseWriter, r *http.Request) {
+    
     arrayOfValidMetaDataConfigFiles := returnValidConfigFiles("./metadata/")
+    
     json.NewEncoder(w).Encode(arrayOfValidMetaDataConfigFiles)
 }
 
@@ -117,7 +118,7 @@ func main(){
     //arrayOfValidMetaDataConfigFiles := returnValidConfigFiles("./metadata/")
     //fmt.Println(arrayOfValidMetaDataConfigFiles)
 
-    router.HandleFunc("/people", GetPeople).Methods("GET")
+    router.HandleFunc("/configs", GetConfigs).Methods("GET")
 
     fmt.Println("Server is Running...")
     log.Fatal(http.ListenAndServe(":8000", router))
