@@ -8,9 +8,12 @@ import (
     "reflect"
     "log"
     "gopkg.in/yaml.v2"
+    "encoding/json"
+    "github.com/gorilla/mux"
+    "net/http"
 )
 
-//NOTE - this will be moved to another file
+//functions for validating the yml files
 type validator interface{
     validateMaintainerEmail() bool
     validateURL() bool
@@ -98,21 +101,21 @@ func returnValidConfigFiles(configFilDirPath string) []MetaDataConfig {
     return arrayOfMetaDataConfigFiles
 }
 
+func GetConfigs(w http.ResponseWriter, r *http.Request) {
+    
+    arrayOfValidMetaDataConfigFiles := returnValidConfigFiles("./metadata/")
+    
+    json.NewEncoder(w).Encode(arrayOfValidMetaDataConfigFiles)
+}
+
 func main(){
 
-    arrayOfValidMetaDataConfigFiles := returnValidConfigFiles("./metadata/")
-    fmt.Println(arrayOfValidMetaDataConfigFiles)
-    
-    /*
-    fmt.Printf("Title: %#v\n", metaDataConfig.Title)
-    fmt.Printf("Version: %#v\n", metaDataConfig.Version)
-    fmt.Printf("Maintainers:\n")
-    fmt.Printf("    Email: %#v\n", metaDataConfig.Maintainers[0]["email"])
-    fmt.Printf("    Name:  %#v\n", metaDataConfig.Maintainers[0]["name"])
-    fmt.Printf("Company: %#v\n", metaDataConfig.Company)
-    fmt.Printf("Website: %#v\n", metaDataConfig.Website)
-    fmt.Printf("Source: %#v\n", metaDataConfig.Source)
-    fmt.Printf("License: %#v\n", metaDataConfig.License)
-    fmt.Printf("Description: %#v\n", metaDataConfig.Description)*/
+    router := mux.NewRouter()
+
+    router.HandleFunc("/configs", GetConfigs  ).Methods("GET")
+
+    fmt.Println("Server is Running...")
+    log.Fatal(http.ListenAndServe(":8000", router))
+
     
 }
