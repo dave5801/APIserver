@@ -8,6 +8,9 @@ import (
     "reflect"
     "log"
     "gopkg.in/yaml.v2"
+    "encoding/json"
+    "github.com/gorilla/mux"
+    "net/http"
 )
 
 //NOTE - this will be moved to another file
@@ -28,6 +31,9 @@ type MetaDataConfig struct{
     License string
     Description string
 }
+
+//var people []Person
+//var arrayOfValidMetaDataConfigFiles []MetaDataConfig
 
 func (metaDataConfig MetaDataConfig) validateMaintainerEmail() bool{
     //CITATION: regex from http://www.golangprograms.com/regular-expression-to-validate-email-address.html
@@ -98,10 +104,23 @@ func returnValidConfigFiles(configFilDirPath string) []MetaDataConfig {
     return arrayOfMetaDataConfigFiles
 }
 
+func GetPeople(w http.ResponseWriter, r *http.Request) {
+    //json.NewEncoder(w).Encode("Yamels Go Here")
+    arrayOfValidMetaDataConfigFiles := returnValidConfigFiles("./metadata/")
+    json.NewEncoder(w).Encode(arrayOfValidMetaDataConfigFiles)
+}
+
 func main(){
 
-    arrayOfValidMetaDataConfigFiles := returnValidConfigFiles("./metadata/")
-    fmt.Println(arrayOfValidMetaDataConfigFiles)
+    router := mux.NewRouter()
+
+    //arrayOfValidMetaDataConfigFiles := returnValidConfigFiles("./metadata/")
+    //fmt.Println(arrayOfValidMetaDataConfigFiles)
+
+    router.HandleFunc("/people", GetPeople).Methods("GET")
+
+    fmt.Println("Server is Running...")
+    log.Fatal(http.ListenAndServe(":8000", router))
     
     /*
     fmt.Printf("Title: %#v\n", metaDataConfig.Title)
