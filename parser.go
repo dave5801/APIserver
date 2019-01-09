@@ -13,7 +13,7 @@ import (
     "net/http"
 )
 
-//NOTE - this will be moved to another file
+//functions for validating the yml files
 type validator interface{
     validateMaintainerEmail() bool
     validateURL() bool
@@ -31,9 +31,6 @@ type MetaDataConfig struct{
     License string
     Description string
 }
-
-//var people []Person
-//var arrayOfValidMetaDataConfigFiles []MetaDataConfig
 
 func (metaDataConfig MetaDataConfig) validateMaintainerEmail() bool{
     //CITATION: regex from http://www.golangprograms.com/regular-expression-to-validate-email-address.html
@@ -115,24 +112,10 @@ func main(){
 
     router := mux.NewRouter()
 
-    //arrayOfValidMetaDataConfigFiles := returnValidConfigFiles("./metadata/")
-    //fmt.Println(arrayOfValidMetaDataConfigFiles)
-
-    router.HandleFunc("/configs", GetConfigs).Methods("GET")
+    router.HandleFunc("/configs", GetConfigs  ).Methods("GET")
 
     fmt.Println("Server is Running...")
     log.Fatal(http.ListenAndServe(":8000", router))
-    
-    /*
-    fmt.Printf("Title: %#v\n", metaDataConfig.Title)
-    fmt.Printf("Version: %#v\n", metaDataConfig.Version)
-    fmt.Printf("Maintainers:\n")
-    fmt.Printf("    Email: %#v\n", metaDataConfig.Maintainers[0]["email"])
-    fmt.Printf("    Name:  %#v\n", metaDataConfig.Maintainers[0]["name"])
-    fmt.Printf("Company: %#v\n", metaDataConfig.Company)
-    fmt.Printf("Website: %#v\n", metaDataConfig.Website)
-    fmt.Printf("Source: %#v\n", metaDataConfig.Source)
-    fmt.Printf("License: %#v\n", metaDataConfig.License)
-    fmt.Printf("Description: %#v\n", metaDataConfig.Description)*/
+
     
 }
