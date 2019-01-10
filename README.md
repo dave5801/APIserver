@@ -1,19 +1,32 @@
 # API Server Project for Upbound
 
-This is an API Endpoint written in the Go programming language. The purpose of this project is a code assessment for Upbound.io.
+This is an API Endpoint written in the Go programming language. The purpose of this project is a code assessment for [Upbound](https://upbound.io/)
 
 ### Prerequisites
 
-Me saying stuff about go installation
+The [Go](https://golang.org/doc/install) Programming language, see installation instructions.
 
 ### Installing
 
-Probably just git clone
+```
+git clone https://github.com/dave5801/APIserver.git
+```
 
 ### Usage
 
-Go run my go file
-Then 
+Open Terminal.
+Navigate to your project directory.
+
+use command:
+```
+go run serverMain.go
+```
+
+to see api endpoint, use the following url:
+
+```
+http://localhost:8000/configs
+```
 
 ### Version
 This is a rough draft
