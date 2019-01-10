@@ -4,12 +4,36 @@ This is an API Endpoint written in the Go programming language. The purpose of t
 
 ### Prerequisites
 
-The [Go](https://golang.org/doc/install) Programming language, see installation instructions.
+The Go Programming language, 
+
+The following go packages:
+
+gopkg.in/yaml.v2
+github.com/gorilla/mux
 
 ### Installing
 
+Open Terminal
+
+Create Project Directory.
+
+```
+cd <Directory-Name>
+```
+
+Install Go. See [installation instructions](https://golang.org/doc/install)
+
+Clone my Repository.
+
 ```
 git clone https://github.com/dave5801/APIserver.git
+```
+
+Install dependencies:
+
+```
+go get gopkg.in/yaml.v2
+go get -u github.com/gorilla/mux
 ```
 
 ### Usage
